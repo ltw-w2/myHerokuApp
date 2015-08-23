@@ -1,0 +1,14 @@
+language: ruby
+
+rvm:
+- 2.0.0
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: vXlbRcYIG0tqm2bXntjTgb+WJe6pUm7EkVSz9vXCP72Ic4hwR2RsFyidMUgp4Pi6ElSzmhb5gBuVayS9cJdyqNceo/JglwKjNvVCne3nSWuJoSmmMcys9z44mmVfdB1NgT5kaYXYNsIkNXo0h+0AyFrKendo8YwTykNe2Z04bsc25qgJTzaQkBhho51TUnDlkePw8jdEFaxfGsqTI34+Pr0xQjtkCwiMdyT2amSHruSOxSndYHeYntxwQlDdbmd9sIZh5Ii1dbmCK2OfD9ez5NysuAiU/RCD17jGv4cwjmPrucau9rEBRgy+PPuicNS0DI5zP7ymbPzG2pSn5zcXwKDBt18LAmCpz1vNAVoHv69/8EQdMwmmBx4dcwYNXFUdL+3+hxXP2WXJaPqeaW5N8BuvEKD1P5fg9ZTGbXOBxALA5n8w07pVGK9c9riFPAvPDtRTdzSPnJqjSJFdrs7mPu85XBkPoqT76a8AATLtAsckLCnJJinqdkOr3XPg3uyOpUW1hx3N1xPJf2UZFHKQa5P1YCCimfb0dCfTWz3ZTJmICq08QPPR1VtGzHeBOoNIWuuz5cTiwk6k82VFn/7RjjdQHfGVB2GWLMGS6+44D1BJNZekpG9hldaL/DpXCA0OlTTracfMH3KXQwXaEH2BmQZOY2uprgnbHJ9oUpnxRVc=
+  app: 
+    master: myheroku-yk
+    staging: myheroku-yk-staging
+  on:
+    repo: ltw-w2/myherokuapp
