@@ -6,7 +6,7 @@
 　⇒ [https://myheroku-yk.herokuapp.com/](https://myheroku-yk.herokuapp.com/)
 
 　TODO：  
-　＊MVC（Model・View・Controller）な構成にしてみる。
+　＊MVC（Model・View・Controller）な構成にしてみる。  
 　＊もう少し WEBアプリ(サービス)っぽいものにする。  
 　＊
 　
