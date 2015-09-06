@@ -20,6 +20,13 @@ configure :staging do
   set :REDIS_PASSWORD => ENV['STAGING_REDIS_PASSWORD']
 end
 
+configure :production do
+  # Redis設定
+  set :REDIS_HOST     => ENV['REDIS_HOST']
+  set :REDIS_PORT     => ENV['REDIS_PORT']
+  set :REDIS_PASSWORD => ENV['REDIS_PASSWORD']
+end
+
 
 # Redis
 if settings.REDIS_PASSWORD != nil then
