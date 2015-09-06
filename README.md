@@ -2,11 +2,11 @@
 
 # myHerokuApp
 
-　Sinatra + Heroku + Travis CI な WEBアプリ開発環境を試してみた。  
+　Sinatra + Heroku + Travis CI + Redis な WEBアプリ開発環境を試してみた。  
 　⇒ [https://myheroku-yk.herokuapp.com/](https://myheroku-yk.herokuapp.com/)
 
 　TODO：  
-　＊もう少し WEBアプリ(orサービス)っぽいものにする。  
-　＊Key-Valueストア の「Redis」を使ってみたい。  
-　　⇒ Heroku の「Redis To Go」  
+　＊MVC（Model・View・Controller）な構成にしてみる。
+　＊もう少し WEBアプリ(サービス)っぽいものにする。  
+　＊
 　
