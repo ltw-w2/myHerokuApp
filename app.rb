@@ -47,7 +47,7 @@ get '/' do
 
   # ローカル変数
   current_access_at = Time.now()
-  last_access_at    = redis.get("LAST_ACCESS_AT")
+  last_access_at    = redis.lindex("HISTORY", 0)
 
   # 初回アクセス時の処理
   if last_access_at == nil then
@@ -55,10 +55,29 @@ get '/' do
   end
 
   # Redis に最終アクセス時刻をキャッシュ
-  redis.set("LAST_ACCESS_AT", current_access_at)
+  redis.lpush("HISTORY", current_access_at)
 
   # ERB で view をテンプレート化
   erb :index, 
       :locals => {:last_access_at    => last_access_at, 
                   :current_access_at => current_access_at}
+end
+
+
+get '/history' do
+  @title   = "Access Logs"
+  @message = ""
+
+  # 直近5件のアクセス履歴を表示
+  @logs = Array.new
+  5.times do |idx|
+    @logs[idx] = redis.lindex("HISTORY", idx)
+  end
+
+  # 6件目移行を削除
+  if redis.llen("HISTORY") > 5 then
+    redis.ltrim("HISTORY", -5, -1)
+  end
+
+  erb :history
 end

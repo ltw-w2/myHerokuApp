@@ -3,7 +3,17 @@
   <body>
     <h1><%= @title %></h1>
     <%= @message %><br>
-    Last access at : <%= last_access_at %><br>
-    Current access at : <%= current_access_at %><br>
+    <br>
+    <table border="0">
+      <tr>
+        <td>Last access at :</td>
+        <td><%= last_access_at %></td>
+      </tr>
+      <tr>
+        <td>Current access at : </td>
+        <td><%= current_access_at %></td>
+      </tr>
+    </table>
+    <a href="./history">AccessLog</a>
   </body>
 </html>
