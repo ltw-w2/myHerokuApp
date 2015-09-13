@@ -76,7 +76,7 @@ get '/history' do
 
   # 6件目移行を削除
   if redis.llen("HISTORY") > 5 then
-    redis.ltrim("HISTORY", -5, -1)
+    redis.ltrim("HISTORY", 0, 4)
   end
 
   erb :history
