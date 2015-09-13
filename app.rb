@@ -55,7 +55,7 @@ get '/' do
   end
 
   # Redis に最終アクセス時刻をキャッシュ
-  redis.set("LAST_ACCESS_AT", last_access_at)
+  redis.set("LAST_ACCESS_AT", current_access_at)
 
   # ERB で view をテンプレート化
   erb :index, 
