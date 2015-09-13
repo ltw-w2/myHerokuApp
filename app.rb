@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'sinatra'
+require 'sinatra/reloader'
 require 'redis'
 
 configure :development, :test do
@@ -40,16 +41,43 @@ end
 
 
 get '/' do
-  # Redis に最終アクセス時刻をキャッシュ
-  last_access_at = nil
-  last_access_at = redis.get("LAST_ACCESS_AT")
-  if last_access_at == nil then
-    last_access_at = Time.now
-  end
-  redis.set("LAST_ACCESS_AT", Time.now)
+  # インスタンス変数
+  @title   = "Index Page"
+  @message = "Hello, World!!"
 
-  # 画面表示
-  "Hello, World!! <br/>" +
-    "Last access at: " + last_access_at.to_s + "<br/>" +
-    "Current access at :" + Time.now.to_s + "<br/>"
+  # ローカル変数
+  current_access_at = Time.now()
+  last_access_at    = redis.lindex("HISTORY", 0)
+
+  # 初回アクセス時の処理
+  if last_access_at == nil then
+    last_access_at = current_access_at
+  end
+
+  # Redis に最終アクセス時刻をキャッシュ
+  redis.lpush("HISTORY", current_access_at)
+
+  # ERB で view をテンプレート化
+  erb :index, 
+      :locals => {:last_access_at    => last_access_at, 
+                  :current_access_at => current_access_at}
+end
+
+
+get '/history' do
+  @title   = "Access Logs"
+  @message = ""
+
+  # 直近5件のアクセス履歴を表示
+  @logs = Array.new
+  5.times do |idx|
+    @logs[idx] = redis.lindex("HISTORY", idx)
+  end
+
+  # 6件目移行を削除
+  if redis.llen("HISTORY") > 5 then
+    redis.ltrim("HISTORY", 0, 4)
+  end
+
+  erb :history
 end
