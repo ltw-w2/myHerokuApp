@@ -64,6 +64,48 @@ get '/' do
 end
 
 
+get '/login' do
+  @title   = "Login Page"
+  @message = "Hello, World!!"
+  @errMessage = ""
+
+  # GET Method の値によってエラーメッセージを振り分ける
+  if params[:failed] == "1" then
+    @errMessage = "Name is empty."
+  elsif params[:failed] == "2" then
+    @errMessage = "Password is empty."
+  end
+
+  erb :login
+end
+
+
+post '/dashboard' do
+  @title   = "Dashboard"
+  @message = "Sorry, this page is Under Construction..."
+
+  # POSTされた値を取得
+  name   = @params[:name]
+  passwd = @params[:password]
+
+  # 入力値チェック
+  if name.empty? then
+    redirect '/login?failed=1'
+  elsif passwd.empty? then
+    redirect '/login?failed=2'
+  end
+
+  # 簡易暗号化
+  # 文字列(=passwd) とランダムな2文字(=salt) を使って DES暗号化
+  salt = [rand(64), rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")
+  cryptPasswd = passwd.crypt(salt)
+
+  @debugMessage = {:name => name, :passwd => cryptPasswd}
+
+  erb :dashboard
+end
+
+
 get '/history' do
   @title   = "Access Logs"
   @message = ""
