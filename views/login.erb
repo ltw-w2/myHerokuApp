@@ -1,0 +1,22 @@
+<html>
+  <title><%= @title %></title>
+  <body>
+    <h1><%= @title %></h1>
+
+    <!-- Welcome Message -->
+    <%= @message %><br>
+    <br>
+
+    <!-- Login Form -->
+    <form action="/dashboard" method="post">
+      Name:
+      <input type="text" name="name"><br>
+      Password:
+      <input type="password" name="password"><br>
+      <input type="submit" value="login">
+    </form>
+
+    <!-- Menu -->
+    <a href="/">Top</a><br>
+  </body>
+</html>

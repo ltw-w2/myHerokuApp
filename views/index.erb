@@ -2,8 +2,16 @@
   <title><%= @title %></title>
   <body>
     <h1><%= @title %></h1>
+
+    <!-- Welcome Message -->
     <%= @message %><br>
     <br>
+
+    <!-- Menu -->
+    <a href="/login">Login</a><br>
+    <br>
+
+    <!-- Activity -->
     <table border="0">
       <tr>
         <td>Last access at :</td>
@@ -14,6 +22,6 @@
         <td><%= current_access_at %></td>
       </tr>
     </table>
-    <a href="./history">AccessLog</a>
+    <a href="/history">AccessLog</a>
   </body>
 </html>
