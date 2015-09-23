@@ -4,7 +4,11 @@
     <h1><%= @title %></h1>
 
     <!-- Welcome Message -->
-    <%= @message %><br>
+    <% if @errMessage == "" then %>
+      <%= @message %><br>
+    <% else %>
+      <font color="red"><%= @errMessage %></font><br>
+    <% end %>
     <br>
 
     <!-- Login Form -->

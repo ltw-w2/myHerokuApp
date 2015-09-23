@@ -67,6 +67,14 @@ end
 get '/login' do
   @title   = "Login Page"
   @message = "Hello, World!!"
+  @errMessage = ""
+
+  # GET Method の値によってエラーメッセージを振り分ける
+  if params[:failed] == "1" then
+    @errMessage = "Name is empty."
+  elsif params[:failed] == "2" then
+    @errMessage = "Password is empty."
+  end
 
   erb :login
 end
@@ -79,6 +87,13 @@ post '/dashboard' do
   # POSTされた値を取得
   name   = @params[:name]
   passwd = @params[:password]
+
+  # 入力値チェック
+  if name.empty? then
+    redirect '/login?failed=1'
+  elsif passwd.empty? then
+    redirect '/login?failed=2'
+  end
 
   # 簡易暗号化
   # 文字列(=passwd) とランダムな2文字(=salt) を使って DES暗号化
