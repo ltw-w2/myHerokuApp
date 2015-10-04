@@ -20,11 +20,20 @@ class User
     self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
   end
 
-  # def hasUser(name)
-  # end
+  def self.hasUser(name)
+    self.first(:name => name) != nil
+  end
 
-  # def authenticate(name, password)
-  # end
+  def self.authenticate(name, password)
+    user = self.first(:name => name)
+    if user != nil then
+      password_hash = BCrypt::Engine.hash_secret(password, user.password_salt)
+      if user.password_hash == password_hash then
+        return user
+      end
+      return nil
+    end
+  end
 end
 
 User.finalize

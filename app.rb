@@ -48,36 +48,42 @@ get '/login' do
 
   # GET Method の値によってエラーメッセージを振り分ける
   if params[:failed] == "1" then
-    @errMessage = "Name is empty."
+    @errMessage = "認証に失敗しました（ユーザ名/パスワードが間違っています）。"
   elsif params[:failed] == "2" then
-    @errMessage = "Password is empty."
+    @errMessage = "登録に失敗しました（そのユーザは既に登録されています）。"
   end
 
   erb :login
 end
 
 
-post '/dashboard' do
+post '/session' do
+  if User::authenticate(params[:name], params[:password]) then
+    redirect '/dashboard'
+  else
+    redirect 'login?failed=1'
+  end
+end
+
+
+post '/regist' do
+  if User::hasUser(params[:name]) then
+    redirect '/login?failed=2'
+  else
+    user = User.create(:name => params[:name])
+    user.encryptPassword(params[:password])
+    if user.save! then
+      redirect '/dashboard'
+    else
+      redirect '/login?failed=2'
+    end
+  end
+end
+
+
+get '/dashboard' do
   @title   = "Dashboard"
   @message = "Sorry, this page is Under Construction..."
-
-  # POSTされた値を取得
-  name     = @params[:name]
-  password = @params[:password]
-
-  # 入力値チェック
-  if name.empty? then
-    redirect '/login?failed=1'
-  elsif password.empty? then
-    redirect '/login?failed=2'
-  end
-
-  user = User.create(:name => name)
-  user.encryptPassword(password)
-  user.save
-
-  # dm = User.first(:name => name)
-  # @debugMessage = {:name => dm.name, :password_hash => dm.password_hash}
   
   erb :dashboard
 end

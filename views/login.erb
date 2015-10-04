@@ -9,15 +9,25 @@
     <% else %>
       <font color="red"><%= @errMessage %></font><br>
     <% end %>
-    <br>
 
     <!-- Login Form -->
-    <form action="/dashboard" method="post">
+    <h3>Login Form</h3>
+    <form action="/session" method="post">
       Name:
       <input type="text" name="name"><br>
       Password:
       <input type="password" name="password"><br>
       <input type="submit" value="login">
+    </form>
+
+    <!-- Regist Form -->
+    <h3>Regist Form</h3>
+    <form action="/regist" method="post">
+      Name:
+      <input type="text" name="name"><br>
+      Password:
+      <input type="password" name="password"><br>
+      <input type="submit" value="regist">
     </form>
 
     <!-- Menu -->
