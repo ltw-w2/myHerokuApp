@@ -4,6 +4,7 @@ require 'sinatra/reloader'
 require 'redis'
 
 require_relative 'config/initializers/redis'
+require_relative 'models/user'
 
 # Redis Settings
 if settings.REDIS_PASSWORD != nil then
@@ -61,23 +62,23 @@ post '/dashboard' do
   @message = "Sorry, this page is Under Construction..."
 
   # POSTされた値を取得
-  name   = @params[:name]
-  passwd = @params[:password]
+  name     = @params[:name]
+  password = @params[:password]
 
   # 入力値チェック
   if name.empty? then
     redirect '/login?failed=1'
-  elsif passwd.empty? then
+  elsif password.empty? then
     redirect '/login?failed=2'
   end
 
-  # 簡易暗号化
-  # 文字列(=passwd) とランダムな2文字(=salt) を使って DES暗号化
-  salt = [rand(64), rand(64)].pack("C*").tr("\x00-\x3f","A-Za-z0-9./")
-  cryptPasswd = passwd.crypt(salt)
+  user = User.create(:name => name)
+  user.encryptPassword(password)
+  user.save
 
-  @debugMessage = {:name => name, :passwd => cryptPasswd}
-
+  # dm = User.first(:name => name)
+  # @debugMessage = {:name => dm.name, :password_hash => dm.password_hash}
+  
   erb :dashboard
 end
 
